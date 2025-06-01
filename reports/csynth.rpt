@@ -1,0 +1,1281 @@
+
+
+================================================================
+== Synthesis Summary Report of 'cnn_block'
+================================================================
++ General Information: 
+    * Date:           Fri May 30 09:33:56 2025
+    * Version:        2024.2 (Build 5238294 on Nov  8 2024)
+    * Project:        cnn_block
+    * Solution:       hls (Vivado IP Flow Target)
+    * Product family: aartix7
+    * Target device:  xa7a12t-cpg238-2I
+    
+
++ Performance & Resource Estimates: 
+    
+    PS: '+' for module; 'o' for loop; '*' for dataflow
+    +-------------+--------+-------+---------+---------+----------+---------+------+----------+------+-----------+--------------+--------------+-----+
+    |   Modules   |  Issue |       | Latency | Latency | Iteration|         | Trip |          |      |           |              |              |     |
+    |   & Loops   |  Type  | Slack | (cycles)|   (ns)  |  Latency | Interval| Count| Pipelined| BRAM |    DSP    |      FF      |      LUT     | URAM|
+    +-------------+--------+-------+---------+---------+----------+---------+------+----------+------+-----------+--------------+--------------+-----+
+    |+ cnn_block  |  Timing|  -0.88|       95|  950.000|         -|       32|     -|       yes|     -|  55 (137%)|  17943 (112%)|  15518 (193%)|    -|
+    +-------------+--------+-------+---------+---------+----------+---------+------+----------+------+-----------+--------------+--------------+-----+
+
+
+================================================================
+== HW Interfaces
+================================================================
+* AP_MEMORY
++-------------------+-----------+----------+
+| Port              | Direction | Bitwidth |
++-------------------+-----------+----------+
+| input_r_address0  | out       | 6        |
+| input_r_address1  | out       | 6        |
+| input_r_q0        | in        | 32       |
+| input_r_q1        | in        | 32       |
+| output_r_address0 | out       | 4        |
+| output_r_address1 | out       | 4        |
+| output_r_d0       | out       | 32       |
+| output_r_d1       | out       | 32       |
++-------------------+-----------+----------+
+
+* Other Ports
++------------+---------+-----------+----------+
+| Port       | Mode    | Direction | Bitwidth |
++------------+---------+-----------+----------+
+| kernel_0_0 | ap_none | in        | 32       |
+| kernel_0_1 | ap_none | in        | 32       |
+| kernel_0_2 | ap_none | in        | 32       |
+| kernel_1_0 | ap_none | in        | 32       |
+| kernel_1_1 | ap_none | in        | 32       |
+| kernel_1_2 | ap_none | in        | 32       |
+| kernel_2_0 | ap_none | in        | 32       |
+| kernel_2_1 | ap_none | in        | 32       |
+| kernel_2_2 | ap_none | in        | 32       |
++------------+---------+-----------+----------+
+
+* TOP LEVEL CONTROL
++-----------+------------+-----------------------------------+
+| Interface | Type       | Ports                             |
++-----------+------------+-----------------------------------+
+| ap_clk    | clock      | ap_clk                            |
+| ap_rst    | reset      | ap_rst                            |
+| ap_ctrl   | ap_ctrl_hs | ap_done ap_idle ap_ready ap_start |
++-----------+------------+-----------------------------------+
+
+
+================================================================
+== SW I/O Information
+================================================================
+* Top Function Arguments
++----------+-----------+----------+
+| Argument | Direction | Datatype |
++----------+-----------+----------+
+| input    | in        | float*   |
+| output   | out       | float*   |
+| kernel   | in        | float*   |
++----------+-----------+----------+
+
+* SW-to-HW Mapping
++----------+-------------------+---------+----------+
+| Argument | HW Interface      | HW Type | HW Usage |
++----------+-------------------+---------+----------+
+| input    | input_r_address0  | port    | offset   |
+| input    | input_r_ce0       | port    |          |
+| input    | input_r_q0        | port    |          |
+| input    | input_r_address1  | port    | offset   |
+| input    | input_r_ce1       | port    |          |
+| input    | input_r_q1        | port    |          |
+| output   | output_r_address0 | port    | offset   |
+| output   | output_r_ce0      | port    |          |
+| output   | output_r_we0      | port    |          |
+| output   | output_r_d0       | port    |          |
+| output   | output_r_address1 | port    | offset   |
+| output   | output_r_ce1      | port    |          |
+| output   | output_r_we1      | port    |          |
+| output   | output_r_d1       | port    |          |
+| kernel   | kernel_0_0        | port    |          |
+| kernel   | kernel_0_1        | port    |          |
+| kernel   | kernel_0_2        | port    |          |
+| kernel   | kernel_1_0        | port    |          |
+| kernel   | kernel_1_1        | port    |          |
+| kernel   | kernel_1_2        | port    |          |
+| kernel   | kernel_2_0        | port    |          |
+| kernel   | kernel_2_1        | port    |          |
+| kernel   | kernel_2_2        | port    |          |
++----------+-------------------+---------+----------+
+
+
+================================================================
+== Bind Op Report
+================================================================
++--------------------------------------+-----+--------+---------------+--------+----------+---------+
+| Name                                 | DSP | Pragma | Variable      | Op     | Impl     | Latency |
++--------------------------------------+-----+--------+---------------+--------+----------+---------+
+| + cnn_block                          | 55  |        |               |        |          |         |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul           | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum           | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_s         | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_1         | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_6         | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_2         | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_7         | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_3         | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_1592_1    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_4         | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_1592_2    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_5         | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_8         | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_6         | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_2598_1    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_7         | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_2598_2    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_8         | fadd   | fulldsp  | 4       |
+|   icmp_ln23_fu_2382_p2               |     |        | icmp_ln23     | setne  | auto     | 0       |
+|   icmp_ln23_1_fu_2388_p2             |     |        | icmp_ln23_1   | seteq  | auto     | 0       |
+|   or_ln23_fu_2394_p2                 |     |        | or_ln23       | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_1         | fcmp   | auto     | 1       |
+|   and_ln23_fu_2400_p2                |     |        | and_ln23      | and    | auto     | 0       |
+|   maxval_62_fu_2406_p3               |     |        | maxval_62     | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_9         | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_9         | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_1478_s    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_10        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_1478_3    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_11        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_1478_1    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_12        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_1478_1_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_13        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_1478_1_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_14        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_1478_2    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_15        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_1478_2_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_16        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_1478_2_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_17        | fadd   | fulldsp  | 4       |
+|   icmp_ln23_2_fu_2432_p2             |     |        | icmp_ln23_2   | setne  | auto     | 0       |
+|   icmp_ln23_3_fu_2438_p2             |     |        | icmp_ln23_3   | seteq  | auto     | 0       |
+|   or_ln23_1_fu_2444_p2               |     |        | or_ln23_1     | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_3         | fcmp   | auto     | 1       |
+|   and_ln23_1_fu_2450_p2              |     |        | and_ln23_1    | and    | auto     | 0       |
+|   val_fu_2456_p3                     |     |        | val           | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_10        | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_18        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_2491_s    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_19        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_2491_3    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_20        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_2491_1    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_21        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_2491_1_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_22        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_2491_1_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_23        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_2491_2    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_24        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_2491_2_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_25        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_2491_2_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_26        | fadd   | fulldsp  | 4       |
+|   icmp_ln23_4_fu_2482_p2             |     |        | icmp_ln23_4   | setne  | auto     | 0       |
+|   icmp_ln23_5_fu_2488_p2             |     |        | icmp_ln23_5   | seteq  | auto     | 0       |
+|   or_ln23_2_fu_2494_p2               |     |        | or_ln23_2     | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_5         | fcmp   | auto     | 1       |
+|   and_ln23_2_fu_2500_p2              |     |        | and_ln23_2    | and    | auto     | 0       |
+|   maxval_fu_2506_p3                  |     |        | maxval        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_11        | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_27        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_3504_s    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_28        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_3504_3    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_29        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_3504_1    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_30        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_3504_1_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_31        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_3504_1_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_32        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_3504_2    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_33        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_3504_2_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_34        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_3504_2_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_35        | fadd   | fulldsp  | 4       |
+|   icmp_ln23_6_fu_2670_p2             |     |        | icmp_ln23_6   | setne  | auto     | 0       |
+|   icmp_ln23_7_fu_2676_p2             |     |        | icmp_ln23_7   | seteq  | auto     | 0       |
+|   or_ln23_3_fu_2682_p2               |     |        | or_ln23_3     | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_7         | fcmp   | auto     | 1       |
+|   and_ln23_3_fu_2688_p2              |     |        | and_ln23_3    | and    | auto     | 0       |
+|   val_38_fu_2694_p3                  |     |        | val_38        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_12        | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_36        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_4517_s    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_37        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_4517_3    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_38        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_4517_1    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_39        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_4517_1_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_40        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_4517_1_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_41        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_4517_2    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_42        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_4517_2_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_43        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_4517_2_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_44        | fadd   | fulldsp  | 4       |
+|   icmp_ln23_8_fu_3132_p2             |     |        | icmp_ln23_8   | setne  | auto     | 0       |
+|   icmp_ln23_9_fu_3138_p2             |     |        | icmp_ln23_9   | seteq  | auto     | 0       |
+|   or_ln23_4_fu_3144_p2               |     |        | or_ln23_4     | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_9         | fcmp   | auto     | 1       |
+|   and_ln23_4_fu_3150_p2              |     |        | and_ln23_4    | and    | auto     | 0       |
+|   maxval_63_fu_3156_p3               |     |        | maxval_63     | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_13        | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_45        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_5530_s    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_46        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_5530_3    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_47        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_5530_1    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_48        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_5530_1_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_49        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_5530_1_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_50        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_5530_2    | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_51        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_5530_2_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_52        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_5530_2_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_53        | fadd   | fulldsp  | 4       |
+|   icmp_ln23_10_fu_3332_p2            |     |        | icmp_ln23_10  | setne  | auto     | 0       |
+|   icmp_ln23_11_fu_3338_p2            |     |        | icmp_ln23_11  | seteq  | auto     | 0       |
+|   or_ln23_5_fu_3344_p2               |     |        | or_ln23_5     | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_10        | fcmp   | auto     | 1       |
+|   and_ln23_5_fu_3350_p2              |     |        | and_ln23_5    | and    | auto     | 0       |
+|   val_41_fu_3356_p3                  |     |        | val_41        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_1         | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_54        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_1_s       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_55        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_1_6       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_56        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_1_7       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_57        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_1_1455_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_58        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_1_1455_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_59        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_1_8       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_60        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_1_2461_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_61        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_1_2461_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_62        | fadd   | fulldsp  | 4       |
+|   icmp_ln23_12_fu_3627_p2            |     |        | icmp_ln23_12  | setne  | auto     | 0       |
+|   icmp_ln23_13_fu_3633_p2            |     |        | icmp_ln23_13  | seteq  | auto     | 0       |
+|   or_ln23_6_fu_3639_p2               |     |        | or_ln23_6     | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_12        | fcmp   | auto     | 1       |
+|   and_ln23_6_fu_3645_p2              |     |        | and_ln23_6    | and    | auto     | 0       |
+|   val_36_fu_3651_p3                  |     |        | val_36        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_1_1       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_63        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_1_1_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_64        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_1_1_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_65        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_1_1_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_66        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_1_1_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_67        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_1_1_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_68        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_1_1_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_69        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_1_1_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_70        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_1_1_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_71        | fadd   | fulldsp  | 4       |
+|   icmp_ln23_14_fu_4514_p2            |     |        | icmp_ln23_14  | setne  | auto     | 0       |
+|   icmp_ln23_15_fu_4520_p2            |     |        | icmp_ln23_15  | seteq  | auto     | 0       |
+|   or_ln23_7_fu_4526_p2               |     |        | or_ln23_7     | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_14        | fcmp   | auto     | 1       |
+|   and_ln23_7_fu_4532_p2              |     |        | and_ln23_7    | and    | auto     | 0       |
+|   val_37_fu_4538_p3                  |     |        | val_37        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_1_2       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_72        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_1_2_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_73        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_1_2_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_74        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_1_2_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_75        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_1_2_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_76        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_1_2_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_77        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_1_2_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_78        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_1_2_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_79        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_1_2_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_80        | fadd   | fulldsp  | 4       |
+|   icmp_ln23_16_fu_3676_p2            |     |        | icmp_ln23_16  | setne  | auto     | 0       |
+|   icmp_ln23_17_fu_3682_p2            |     |        | icmp_ln23_17  | seteq  | auto     | 0       |
+|   or_ln23_8_fu_3688_p2               |     |        | or_ln23_8     | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_16        | fcmp   | auto     | 1       |
+|   and_ln23_8_fu_3694_p2              |     |        | and_ln23_8    | and    | auto     | 0       |
+|   val_39_fu_3700_p3                  |     |        | val_39        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_1_3       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_81        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_1_3_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_82        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_1_3_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_83        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_1_3_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_84        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_1_3_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_85        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_1_3_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_86        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_1_3_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_87        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_1_3_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_88        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_1_3_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_89        | fadd   | fulldsp  | 4       |
+|   icmp_ln23_18_fu_4564_p2            |     |        | icmp_ln23_18  | setne  | auto     | 0       |
+|   icmp_ln23_19_fu_4570_p2            |     |        | icmp_ln23_19  | seteq  | auto     | 0       |
+|   or_ln23_9_fu_4576_p2               |     |        | or_ln23_9     | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_18        | fcmp   | auto     | 1       |
+|   and_ln23_9_fu_4582_p2              |     |        | and_ln23_9    | and    | auto     | 0       |
+|   val_40_fu_4588_p3                  |     |        | val_40        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_1_4       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_90        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_1_4_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_91        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_1_4_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_92        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_1_4_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_93        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_1_4_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_94        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_1_4_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_95        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_1_4_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_96        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_1_4_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_97        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_1_4_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_98        | fadd   | fulldsp  | 4       |
+|   icmp_ln23_20_fu_3726_p2            |     |        | icmp_ln23_20  | setne  | auto     | 0       |
+|   icmp_ln23_21_fu_3732_p2            |     |        | icmp_ln23_21  | seteq  | auto     | 0       |
+|   or_ln23_10_fu_3738_p2              |     |        | or_ln23_10    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_20        | fcmp   | auto     | 1       |
+|   and_ln23_10_fu_3744_p2             |     |        | and_ln23_10   | and    | auto     | 0       |
+|   val_42_fu_3750_p3                  |     |        | val_42        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_1_5       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_99        | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_1_5_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_100       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_1_5_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_101       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_1_5_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_102       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_1_5_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_103       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_1_5_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_104       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_1_5_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_105       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_1_5_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_106       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_1_5_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_107       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_22_fu_4614_p2            |     |        | icmp_ln23_22  | setne  | auto     | 0       |
+|   icmp_ln23_23_fu_4620_p2            |     |        | icmp_ln23_23  | seteq  | auto     | 0       |
+|   or_ln23_11_fu_4626_p2              |     |        | or_ln23_11    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_22        | fcmp   | auto     | 1       |
+|   and_ln23_11_fu_4632_p2             |     |        | and_ln23_11   | and    | auto     | 0       |
+|   val_43_fu_4638_p3                  |     |        | val_43        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_2         | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_108       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_2_s       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_109       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_2_6       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_110       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_2_7       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_111       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_2_1383_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_112       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_2_1383_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_113       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_2_8       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_114       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_2_2389_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_115       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_2_2389_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_116       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_24_fu_2532_p2            |     |        | icmp_ln23_24  | setne  | auto     | 0       |
+|   icmp_ln23_25_fu_2538_p2            |     |        | icmp_ln23_25  | seteq  | auto     | 0       |
+|   or_ln23_12_fu_2544_p2              |     |        | or_ln23_12    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_24        | fcmp   | auto     | 1       |
+|   and_ln23_12_fu_2550_p2             |     |        | and_ln23_12   | and    | auto     | 0       |
+|   maxval_64_fu_2556_p3               |     |        | maxval_64     | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_2_1       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_117       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_2_1_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_118       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_2_1_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_119       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_2_1_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_120       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_2_1_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_121       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_2_1_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U1  | 2   |        | sum_122       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_2_1_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_123       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_2_1_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_124       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_2_1_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_125       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_26_fu_2720_p2            |     |        | icmp_ln23_26  | setne  | auto     | 0       |
+|   icmp_ln23_27_fu_2726_p2            |     |        | icmp_ln23_27  | seteq  | auto     | 0       |
+|   or_ln23_13_fu_2732_p2              |     |        | or_ln23_13    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_26        | fcmp   | auto     | 1       |
+|   and_ln23_13_fu_2738_p2             |     |        | and_ln23_13   | and    | auto     | 0       |
+|   val_44_fu_2744_p3                  |     |        | val_44        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_2_2       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_126       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_2_2_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_127       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_2_2_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_128       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_2_2_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_129       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_2_2_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_130       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_2_2_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_131       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_2_2_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_132       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_2_2_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_133       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_2_2_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_134       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_28_fu_2770_p2            |     |        | icmp_ln23_28  | setne  | auto     | 0       |
+|   icmp_ln23_29_fu_2776_p2            |     |        | icmp_ln23_29  | seteq  | auto     | 0       |
+|   or_ln23_14_fu_2782_p2              |     |        | or_ln23_14    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_28        | fcmp   | auto     | 1       |
+|   and_ln23_14_fu_2788_p2             |     |        | and_ln23_14   | and    | auto     | 0       |
+|   maxval_65_fu_2794_p3               |     |        | maxval_65     | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_2_3       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_135       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_2_3_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_136       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_2_3_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_137       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_2_3_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_138       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_2_3_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_139       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_2_3_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_140       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_2_3_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_141       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_2_3_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_142       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_2_3_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_143       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_30_fu_2819_p2            |     |        | icmp_ln23_30  | setne  | auto     | 0       |
+|   icmp_ln23_31_fu_2825_p2            |     |        | icmp_ln23_31  | seteq  | auto     | 0       |
+|   or_ln23_15_fu_2831_p2              |     |        | or_ln23_15    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_30        | fcmp   | auto     | 1       |
+|   and_ln23_15_fu_2837_p2             |     |        | and_ln23_15   | and    | auto     | 0       |
+|   val_47_fu_2843_p3                  |     |        | val_47        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_2_4       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U2  | 2   |        | sum_144       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_2_4_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_145       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_2_4_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_146       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_2_4_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_147       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_2_4_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_148       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_2_4_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_149       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_2_4_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_150       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_2_4_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_151       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_2_4_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_152       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_32_fu_3182_p2            |     |        | icmp_ln23_32  | setne  | auto     | 0       |
+|   icmp_ln23_33_fu_3188_p2            |     |        | icmp_ln23_33  | seteq  | auto     | 0       |
+|   or_ln23_16_fu_3194_p2              |     |        | or_ln23_16    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_32        | fcmp   | auto     | 1       |
+|   and_ln23_16_fu_3200_p2             |     |        | and_ln23_16   | and    | auto     | 0       |
+|   maxval_66_fu_3206_p3               |     |        | maxval_66     | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_2_5       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_153       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_2_5_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_154       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_2_5_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_155       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_2_5_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_156       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_2_5_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_157       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_2_5_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_158       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_2_5_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_159       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_2_5_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_160       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_2_5_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_161       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_34_fu_3382_p2            |     |        | icmp_ln23_34  | setne  | auto     | 0       |
+|   icmp_ln23_35_fu_3388_p2            |     |        | icmp_ln23_35  | seteq  | auto     | 0       |
+|   or_ln23_17_fu_3394_p2              |     |        | or_ln23_17    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_34        | fcmp   | auto     | 1       |
+|   and_ln23_17_fu_3400_p2             |     |        | and_ln23_17   | and    | auto     | 0       |
+|   val_50_fu_3406_p3                  |     |        | val_50        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_3         | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_162       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_3_s       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_163       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_3_6       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_164       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_3_7       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_165       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_3_1311_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_166       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_3_1311_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_167       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_3_8       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_168       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_3_2317_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_169       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_3_2317_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_170       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_36_fu_3776_p2            |     |        | icmp_ln23_36  | setne  | auto     | 0       |
+|   icmp_ln23_37_fu_3782_p2            |     |        | icmp_ln23_37  | seteq  | auto     | 0       |
+|   or_ln23_18_fu_3788_p2              |     |        | or_ln23_18    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_36        | fcmp   | auto     | 1       |
+|   and_ln23_18_fu_3794_p2             |     |        | and_ln23_18   | and    | auto     | 0       |
+|   val_45_fu_3800_p3                  |     |        | val_45        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_3_1       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_171       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_3_1_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_172       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_3_1_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_173       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_3_1_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_174       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_3_1_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_175       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_3_1_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_176       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_3_1_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_177       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_3_1_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_178       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_3_1_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_179       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_38_fu_4664_p2            |     |        | icmp_ln23_38  | setne  | auto     | 0       |
+|   icmp_ln23_39_fu_4670_p2            |     |        | icmp_ln23_39  | seteq  | auto     | 0       |
+|   or_ln23_19_fu_4676_p2              |     |        | or_ln23_19    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_38        | fcmp   | auto     | 1       |
+|   and_ln23_19_fu_4682_p2             |     |        | and_ln23_19   | and    | auto     | 0       |
+|   val_46_fu_4688_p3                  |     |        | val_46        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_3_2       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_180       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_3_2_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_181       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_3_2_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_182       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_3_2_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_183       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_3_2_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_184       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_3_2_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_185       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_3_2_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_186       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_3_2_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_187       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_3_2_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_188       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_40_fu_3825_p2            |     |        | icmp_ln23_40  | setne  | auto     | 0       |
+|   icmp_ln23_41_fu_3831_p2            |     |        | icmp_ln23_41  | seteq  | auto     | 0       |
+|   or_ln23_20_fu_3837_p2              |     |        | or_ln23_20    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_40        | fcmp   | auto     | 1       |
+|   and_ln23_20_fu_3843_p2             |     |        | and_ln23_20   | and    | auto     | 0       |
+|   val_48_fu_3849_p3                  |     |        | val_48        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_3_3       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_189       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_3_3_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_190       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_3_3_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_191       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_3_3_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_192       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_3_3_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_193       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_3_3_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_194       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_3_3_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_195       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_3_3_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_196       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_3_3_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_197       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_42_fu_4714_p2            |     |        | icmp_ln23_42  | setne  | auto     | 0       |
+|   icmp_ln23_43_fu_4720_p2            |     |        | icmp_ln23_43  | seteq  | auto     | 0       |
+|   or_ln23_21_fu_4726_p2              |     |        | or_ln23_21    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_42        | fcmp   | auto     | 1       |
+|   and_ln23_21_fu_4732_p2             |     |        | and_ln23_21   | and    | auto     | 0       |
+|   val_49_fu_4738_p3                  |     |        | val_49        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_3_4       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_198       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_3_4_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_199       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_3_4_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_200       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_3_4_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_201       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_3_4_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_202       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_3_4_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_203       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_3_4_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_204       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_3_4_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_205       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_3_4_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_206       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_44_fu_3874_p2            |     |        | icmp_ln23_44  | setne  | auto     | 0       |
+|   icmp_ln23_45_fu_3880_p2            |     |        | icmp_ln23_45  | seteq  | auto     | 0       |
+|   or_ln23_22_fu_3886_p2              |     |        | or_ln23_22    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_44        | fcmp   | auto     | 1       |
+|   and_ln23_22_fu_3892_p2             |     |        | and_ln23_22   | and    | auto     | 0       |
+|   val_51_fu_3898_p3                  |     |        | val_51        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_3_5       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_207       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_3_5_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_208       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_3_5_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_209       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_3_5_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_210       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_3_5_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_211       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_3_5_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_212       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_3_5_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_213       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_3_5_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_214       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_3_5_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_215       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_46_fu_4764_p2            |     |        | icmp_ln23_46  | setne  | auto     | 0       |
+|   icmp_ln23_47_fu_4770_p2            |     |        | icmp_ln23_47  | seteq  | auto     | 0       |
+|   or_ln23_23_fu_4776_p2              |     |        | or_ln23_23    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_46        | fcmp   | auto     | 1       |
+|   and_ln23_23_fu_4782_p2             |     |        | and_ln23_23   | and    | auto     | 0       |
+|   val_52_fu_4788_p3                  |     |        | val_52        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_4         | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_216       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_4_s       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_217       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_4_6       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_218       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_4_7       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_219       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_4_1239_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_220       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_4_1239_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_221       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_4_8       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_222       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_4_2245_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_223       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_4_2245_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_224       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_48_fu_3232_p2            |     |        | icmp_ln23_48  | setne  | auto     | 0       |
+|   icmp_ln23_49_fu_3238_p2            |     |        | icmp_ln23_49  | seteq  | auto     | 0       |
+|   or_ln23_24_fu_3244_p2              |     |        | or_ln23_24    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_48        | fcmp   | auto     | 1       |
+|   and_ln23_24_fu_3250_p2             |     |        | and_ln23_24   | and    | auto     | 0       |
+|   maxval_67_fu_3256_p3               |     |        | maxval_67     | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_4_1       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_225       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_4_1_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_226       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_4_1_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_227       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_4_1_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_228       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_4_1_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_229       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_4_1_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_230       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_4_1_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_231       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_4_1_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_232       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_4_1_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_233       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_50_fu_3282_p2            |     |        | icmp_ln23_50  | setne  | auto     | 0       |
+|   icmp_ln23_51_fu_3288_p2            |     |        | icmp_ln23_51  | seteq  | auto     | 0       |
+|   or_ln23_25_fu_3294_p2              |     |        | or_ln23_25    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_50        | fcmp   | auto     | 1       |
+|   and_ln23_25_fu_3300_p2             |     |        | and_ln23_25   | and    | auto     | 0       |
+|   val_53_fu_3306_p3                  |     |        | val_53        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_4_2       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_234       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_4_2_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_235       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_4_2_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_236       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_4_2_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_237       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_4_2_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_238       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_4_2_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_239       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_4_2_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_240       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_4_2_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_241       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_4_2_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_242       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_52_fu_3431_p2            |     |        | icmp_ln23_52  | setne  | auto     | 0       |
+|   icmp_ln23_53_fu_3437_p2            |     |        | icmp_ln23_53  | seteq  | auto     | 0       |
+|   or_ln23_26_fu_3443_p2              |     |        | or_ln23_26    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_52        | fcmp   | auto     | 1       |
+|   and_ln23_26_fu_3449_p2             |     |        | and_ln23_26   | and    | auto     | 0       |
+|   maxval_68_fu_3455_p3               |     |        | maxval_68     | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_4_3       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_243       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_4_3_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_244       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_4_3_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_245       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_4_3_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_246       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_4_3_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_247       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_4_3_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_248       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_4_3_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_249       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_4_3_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_250       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_4_3_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_251       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_54_fu_3480_p2            |     |        | icmp_ln23_54  | setne  | auto     | 0       |
+|   icmp_ln23_55_fu_3486_p2            |     |        | icmp_ln23_55  | seteq  | auto     | 0       |
+|   or_ln23_27_fu_3492_p2              |     |        | or_ln23_27    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_54        | fcmp   | auto     | 1       |
+|   and_ln23_27_fu_3498_p2             |     |        | and_ln23_27   | and    | auto     | 0       |
+|   val_56_fu_3504_p3                  |     |        | val_56        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_4_4       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U3  | 2   |        | sum_252       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_4_4_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_253       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_4_4_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_254       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_4_4_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_255       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_4_4_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_256       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_4_4_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_257       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_4_4_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_258       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_4_4_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_259       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_4_4_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_260       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_56_fu_3529_p2            |     |        | icmp_ln23_56  | setne  | auto     | 0       |
+|   icmp_ln23_57_fu_3535_p2            |     |        | icmp_ln23_57  | seteq  | auto     | 0       |
+|   or_ln23_28_fu_3541_p2              |     |        | or_ln23_28    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_56        | fcmp   | auto     | 1       |
+|   and_ln23_28_fu_3547_p2             |     |        | and_ln23_28   | and    | auto     | 0       |
+|   maxval_69_fu_3553_p3               |     |        | maxval_69     | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_4_5       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U4  | 2   |        | sum_261       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_4_5_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_262       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_4_5_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_263       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_4_5_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_264       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_4_5_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_265       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_4_5_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_266       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_4_5_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_267       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_4_5_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_268       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_4_5_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_269       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_58_fu_3578_p2            |     |        | icmp_ln23_58  | setne  | auto     | 0       |
+|   icmp_ln23_59_fu_3584_p2            |     |        | icmp_ln23_59  | seteq  | auto     | 0       |
+|   or_ln23_29_fu_3590_p2              |     |        | or_ln23_29    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_58        | fcmp   | auto     | 1       |
+|   and_ln23_29_fu_3596_p2             |     |        | and_ln23_29   | and    | auto     | 0       |
+|   val_59_fu_3602_p3                  |     |        | val_59        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_5         | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_270       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_5_s       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_271       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_5_6       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_272       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_5_7       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_273       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_5_1167_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_274       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_5_1167_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_275       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_5_8       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_276       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_5_2173_1  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_277       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_5_2173_2  | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_278       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_60_fu_3924_p2            |     |        | icmp_ln23_60  | setne  | auto     | 0       |
+|   icmp_ln23_61_fu_3930_p2            |     |        | icmp_ln23_61  | seteq  | auto     | 0       |
+|   or_ln23_30_fu_3936_p2              |     |        | or_ln23_30    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_60        | fcmp   | auto     | 1       |
+|   and_ln23_30_fu_3942_p2             |     |        | and_ln23_30   | and    | auto     | 0       |
+|   val_54_fu_3948_p3                  |     |        | val_54        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_5_1       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_279       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_5_1_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_280       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_5_1_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_281       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_5_1_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_282       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_5_1_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_283       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_5_1_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_284       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_5_1_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_285       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_5_1_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_286       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_5_1_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_287       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_62_fu_4814_p2            |     |        | icmp_ln23_62  | setne  | auto     | 0       |
+|   icmp_ln23_63_fu_4820_p2            |     |        | icmp_ln23_63  | seteq  | auto     | 0       |
+|   or_ln23_31_fu_4826_p2              |     |        | or_ln23_31    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_62        | fcmp   | auto     | 1       |
+|   and_ln23_31_fu_4832_p2             |     |        | and_ln23_31   | and    | auto     | 0       |
+|   val_55_fu_4838_p3                  |     |        | val_55        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_5_2       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_288       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_5_2_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_289       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_5_2_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_290       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_5_2_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U6  | 2   |        | sum_291       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_5_2_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_292       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_5_2_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_293       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U18  | 3   |        | mul_5_2_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_294       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_5_2_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_295       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_5_2_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_296       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_64_fu_3974_p2            |     |        | icmp_ln23_64  | setne  | auto     | 0       |
+|   icmp_ln23_65_fu_3980_p2            |     |        | icmp_ln23_65  | seteq  | auto     | 0       |
+|   or_ln23_32_fu_3986_p2              |     |        | or_ln23_32    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_64        | fcmp   | auto     | 1       |
+|   and_ln23_32_fu_3992_p2             |     |        | and_ln23_32   | and    | auto     | 0       |
+|   val_57_fu_3998_p3                  |     |        | val_57        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_5_3       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_297       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_5_3_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_298       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_5_3_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U7  | 2   |        | sum_299       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U19  | 3   |        | mul_5_3_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U9  | 2   |        | sum_300       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_5_3_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_301       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_5_3_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_302       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_5_3_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_303       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_5_3_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_304       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_5_3_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_305       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_66_fu_4864_p2            |     |        | icmp_ln23_66  | setne  | auto     | 0       |
+|   icmp_ln23_67_fu_4870_p2            |     |        | icmp_ln23_67  | seteq  | auto     | 0       |
+|   or_ln23_33_fu_4876_p2              |     |        | or_ln23_33    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_66        | fcmp   | auto     | 1       |
+|   and_ln23_33_fu_4882_p2             |     |        | and_ln23_33   | and    | auto     | 0       |
+|   val_58_fu_4888_p3                  |     |        | val_58        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_5_4       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U5  | 2   |        | sum_306       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_5_4_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_307       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_5_4_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_308       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_5_4_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_309       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_5_4_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_310       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U20  | 3   |        | mul_5_4_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_311       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U15  | 3   |        | mul_5_4_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_312       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U16  | 3   |        | mul_5_4_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_313       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U12  | 3   |        | mul_5_4_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_314       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_68_fu_4024_p2            |     |        | icmp_ln23_68  | setne  | auto     | 0       |
+|   icmp_ln23_69_fu_4030_p2            |     |        | icmp_ln23_69  | seteq  | auto     | 0       |
+|   or_ln23_34_fu_4036_p2              |     |        | or_ln23_34    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_68        | fcmp   | auto     | 1       |
+|   and_ln23_34_fu_4042_p2             |     |        | and_ln23_34   | and    | auto     | 0       |
+|   val_60_fu_4048_p3                  |     |        | val_60        | select | auto_sel | 0       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_5_5       | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_315       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_5_5_s     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_316       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_5_5_3     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U8  | 2   |        | sum_317       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_5_5_1     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U10 | 2   |        | sum_318       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U21  | 3   |        | mul_5_5_1_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_319       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U22  | 3   |        | mul_5_5_1_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_320       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U17  | 3   |        | mul_5_5_2     | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_321       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U13  | 3   |        | mul_5_5_2_1   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_322       | fadd   | fulldsp  | 4       |
+|   fmul_32ns_32ns_32_4_max_dsp_1_U14  | 3   |        | mul_5_5_2_2   | fmul   | maxdsp   | 3       |
+|   fadd_32ns_32ns_32_5_full_dsp_1_U11 | 2   |        | sum_323       | fadd   | fulldsp  | 4       |
+|   icmp_ln23_70_fu_4914_p2            |     |        | icmp_ln23_70  | setne  | auto     | 0       |
+|   icmp_ln23_71_fu_4920_p2            |     |        | icmp_ln23_71  | seteq  | auto     | 0       |
+|   or_ln23_35_fu_4926_p2              |     |        | or_ln23_35    | or     | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_70        | fcmp   | auto     | 1       |
+|   and_ln23_35_fu_4932_p2             |     |        | and_ln23_35   | and    | auto     | 0       |
+|   val_61_fu_4938_p3                  |     |        | val_61        | select | auto_sel | 0       |
+|   icmp_ln34_fu_2598_p2               |     |        | icmp_ln34     | setne  | auto     | 0       |
+|   icmp_ln34_1_fu_2604_p2             |     |        | icmp_ln34_1   | seteq  | auto     | 0       |
+|   or_ln34_fu_2610_p2                 |     |        | or_ln34       | or     | auto     | 0       |
+|   icmp_ln34_2_fu_2616_p2             |     |        | icmp_ln34_2   | setne  | auto     | 0       |
+|   icmp_ln34_3_fu_2622_p2             |     |        | icmp_ln34_3   | seteq  | auto     | 0       |
+|   or_ln34_1_fu_2628_p2               |     |        | or_ln34_1     | or     | auto     | 0       |
+|   and_ln34_fu_2634_p2                |     |        | and_ln34      | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_73        | fcmp   | auto     | 1       |
+|   and_ln34_1_fu_2640_p2              |     |        | and_ln34_1    | and    | auto     | 0       |
+|   maxval_1_fu_2646_p3                |     |        | maxval_1      | select | auto_sel | 0       |
+|   icmp_ln34_4_fu_4980_p2             |     |        | icmp_ln34_4   | setne  | auto     | 0       |
+|   icmp_ln34_5_fu_4986_p2             |     |        | icmp_ln34_5   | seteq  | auto     | 0       |
+|   or_ln34_2_fu_4992_p2               |     |        | or_ln34_2     | or     | auto     | 0       |
+|   icmp_ln34_6_fu_4998_p2             |     |        | icmp_ln34_6   | setne  | auto     | 0       |
+|   icmp_ln34_7_fu_5004_p2             |     |        | icmp_ln34_7   | seteq  | auto     | 0       |
+|   or_ln34_3_fu_5010_p2               |     |        | or_ln34_3     | or     | auto     | 0       |
+|   and_ln34_2_fu_5016_p2              |     |        | and_ln34_2    | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_76        | fcmp   | auto     | 1       |
+|   and_ln34_3_fu_5022_p2              |     |        | and_ln34_3    | and    | auto     | 0       |
+|   maxval_3_fu_5028_p3                |     |        | maxval_3      | select | auto_sel | 0       |
+|   icmp_ln34_8_fu_5772_p2             |     |        | icmp_ln34_8   | setne  | auto     | 0       |
+|   icmp_ln34_9_fu_5778_p2             |     |        | icmp_ln34_9   | seteq  | auto     | 0       |
+|   or_ln34_4_fu_5784_p2               |     |        | or_ln34_4     | or     | auto     | 0       |
+|   icmp_ln34_10_fu_5790_p2            |     |        | icmp_ln34_10  | setne  | auto     | 0       |
+|   icmp_ln34_11_fu_5796_p2            |     |        | icmp_ln34_11  | seteq  | auto     | 0       |
+|   or_ln34_5_fu_5802_p2               |     |        | or_ln34_5     | or     | auto     | 0       |
+|   and_ln34_4_fu_5808_p2              |     |        | and_ln34_4    | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_79        | fcmp   | auto     | 1       |
+|   and_ln34_5_fu_5814_p2              |     |        | and_ln34_5    | and    | auto     | 0       |
+|   maxval_5_fu_5820_p3                |     |        | maxval_5      | select | auto_sel | 0       |
+|   icmp_ln34_12_fu_2884_p2            |     |        | icmp_ln34_12  | setne  | auto     | 0       |
+|   icmp_ln34_13_fu_2890_p2            |     |        | icmp_ln34_13  | seteq  | auto     | 0       |
+|   or_ln34_6_fu_2896_p2               |     |        | or_ln34_6     | or     | auto     | 0       |
+|   icmp_ln34_14_fu_2902_p2            |     |        | icmp_ln34_14  | setne  | auto     | 0       |
+|   icmp_ln34_15_fu_2908_p2            |     |        | icmp_ln34_15  | seteq  | auto     | 0       |
+|   or_ln34_7_fu_2914_p2               |     |        | or_ln34_7     | or     | auto     | 0       |
+|   and_ln34_6_fu_2920_p2              |     |        | and_ln34_6    | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_82        | fcmp   | auto     | 1       |
+|   and_ln34_7_fu_2926_p2              |     |        | and_ln34_7    | and    | auto     | 0       |
+|   maxval_8_fu_2932_p3                |     |        | maxval_8      | select | auto_sel | 0       |
+|   icmp_ln34_16_fu_5068_p2            |     |        | icmp_ln34_16  | setne  | auto     | 0       |
+|   icmp_ln34_17_fu_5074_p2            |     |        | icmp_ln34_17  | seteq  | auto     | 0       |
+|   or_ln34_8_fu_5080_p2               |     |        | or_ln34_8     | or     | auto     | 0       |
+|   icmp_ln34_18_fu_5086_p2            |     |        | icmp_ln34_18  | setne  | auto     | 0       |
+|   icmp_ln34_19_fu_5092_p2            |     |        | icmp_ln34_19  | seteq  | auto     | 0       |
+|   or_ln34_9_fu_5098_p2               |     |        | or_ln34_9     | or     | auto     | 0       |
+|   and_ln34_8_fu_5104_p2              |     |        | and_ln34_8    | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_85        | fcmp   | auto     | 1       |
+|   and_ln34_9_fu_5110_p2              |     |        | and_ln34_9    | and    | auto     | 0       |
+|   maxval_10_fu_5116_p3               |     |        | maxval_10     | select | auto_sel | 0       |
+|   icmp_ln34_20_fu_5864_p2            |     |        | icmp_ln34_20  | setne  | auto     | 0       |
+|   icmp_ln34_21_fu_5870_p2            |     |        | icmp_ln34_21  | seteq  | auto     | 0       |
+|   or_ln34_10_fu_5876_p2              |     |        | or_ln34_10    | or     | auto     | 0       |
+|   icmp_ln34_22_fu_5882_p2            |     |        | icmp_ln34_22  | setne  | auto     | 0       |
+|   icmp_ln34_23_fu_5888_p2            |     |        | icmp_ln34_23  | seteq  | auto     | 0       |
+|   or_ln34_11_fu_5894_p2              |     |        | or_ln34_11    | or     | auto     | 0       |
+|   and_ln34_10_fu_5900_p2             |     |        | and_ln34_10   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_88        | fcmp   | auto     | 1       |
+|   and_ln34_11_fu_5906_p2             |     |        | and_ln34_11   | and    | auto     | 0       |
+|   maxval_12_fu_5912_p3               |     |        | maxval_12     | select | auto_sel | 0       |
+|   icmp_ln34_24_fu_4090_p2            |     |        | icmp_ln34_24  | setne  | auto     | 0       |
+|   icmp_ln34_25_fu_4096_p2            |     |        | icmp_ln34_25  | seteq  | auto     | 0       |
+|   or_ln34_12_fu_4102_p2              |     |        | or_ln34_12    | or     | auto     | 0       |
+|   icmp_ln34_26_fu_4108_p2            |     |        | icmp_ln34_26  | setne  | auto     | 0       |
+|   icmp_ln34_27_fu_4114_p2            |     |        | icmp_ln34_27  | seteq  | auto     | 0       |
+|   or_ln34_13_fu_4120_p2              |     |        | or_ln34_13    | or     | auto     | 0       |
+|   and_ln34_12_fu_4126_p2             |     |        | and_ln34_12   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_91        | fcmp   | auto     | 1       |
+|   and_ln34_13_fu_4132_p2             |     |        | and_ln34_13   | and    | auto     | 0       |
+|   maxval_15_fu_4138_p3               |     |        | maxval_15     | select | auto_sel | 0       |
+|   icmp_ln34_28_fu_5156_p2            |     |        | icmp_ln34_28  | setne  | auto     | 0       |
+|   icmp_ln34_29_fu_5162_p2            |     |        | icmp_ln34_29  | seteq  | auto     | 0       |
+|   or_ln34_14_fu_5168_p2              |     |        | or_ln34_14    | or     | auto     | 0       |
+|   icmp_ln34_30_fu_5174_p2            |     |        | icmp_ln34_30  | setne  | auto     | 0       |
+|   icmp_ln34_31_fu_5180_p2            |     |        | icmp_ln34_31  | seteq  | auto     | 0       |
+|   or_ln34_15_fu_5186_p2              |     |        | or_ln34_15    | or     | auto     | 0       |
+|   and_ln34_14_fu_5192_p2             |     |        | and_ln34_14   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_94        | fcmp   | auto     | 1       |
+|   and_ln34_15_fu_5198_p2             |     |        | and_ln34_15   | and    | auto     | 0       |
+|   maxval_17_fu_5204_p3               |     |        | maxval_17     | select | auto_sel | 0       |
+|   icmp_ln34_32_fu_5952_p2            |     |        | icmp_ln34_32  | setne  | auto     | 0       |
+|   icmp_ln34_33_fu_5958_p2            |     |        | icmp_ln34_33  | seteq  | auto     | 0       |
+|   or_ln34_16_fu_5964_p2              |     |        | or_ln34_16    | or     | auto     | 0       |
+|   icmp_ln34_34_fu_5970_p2            |     |        | icmp_ln34_34  | setne  | auto     | 0       |
+|   icmp_ln34_35_fu_5976_p2            |     |        | icmp_ln34_35  | seteq  | auto     | 0       |
+|   or_ln34_17_fu_5982_p2              |     |        | or_ln34_17    | or     | auto     | 0       |
+|   and_ln34_16_fu_5988_p2             |     |        | and_ln34_16   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_97        | fcmp   | auto     | 1       |
+|   and_ln34_17_fu_5994_p2             |     |        | and_ln34_17   | and    | auto     | 0       |
+|   maxval_19_fu_6000_p3               |     |        | maxval_19     | select | auto_sel | 0       |
+|   icmp_ln34_36_fu_2972_p2            |     |        | icmp_ln34_36  | setne  | auto     | 0       |
+|   icmp_ln34_37_fu_2978_p2            |     |        | icmp_ln34_37  | seteq  | auto     | 0       |
+|   or_ln34_18_fu_2984_p2              |     |        | or_ln34_18    | or     | auto     | 0       |
+|   icmp_ln34_38_fu_2990_p2            |     |        | icmp_ln34_38  | setne  | auto     | 0       |
+|   icmp_ln34_39_fu_2996_p2            |     |        | icmp_ln34_39  | seteq  | auto     | 0       |
+|   or_ln34_19_fu_3002_p2              |     |        | or_ln34_19    | or     | auto     | 0       |
+|   and_ln34_18_fu_3008_p2             |     |        | and_ln34_18   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_100       | fcmp   | auto     | 1       |
+|   and_ln34_19_fu_3014_p2             |     |        | and_ln34_19   | and    | auto     | 0       |
+|   maxval_22_fu_3020_p3               |     |        | maxval_22     | select | auto_sel | 0       |
+|   icmp_ln34_40_fu_5244_p2            |     |        | icmp_ln34_40  | setne  | auto     | 0       |
+|   icmp_ln34_41_fu_5250_p2            |     |        | icmp_ln34_41  | seteq  | auto     | 0       |
+|   or_ln34_20_fu_5256_p2              |     |        | or_ln34_20    | or     | auto     | 0       |
+|   icmp_ln34_42_fu_5262_p2            |     |        | icmp_ln34_42  | setne  | auto     | 0       |
+|   icmp_ln34_43_fu_5268_p2            |     |        | icmp_ln34_43  | seteq  | auto     | 0       |
+|   or_ln34_21_fu_5274_p2              |     |        | or_ln34_21    | or     | auto     | 0       |
+|   and_ln34_20_fu_5280_p2             |     |        | and_ln34_20   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_103       | fcmp   | auto     | 1       |
+|   and_ln34_21_fu_5286_p2             |     |        | and_ln34_21   | and    | auto     | 0       |
+|   maxval_24_fu_5292_p3               |     |        | maxval_24     | select | auto_sel | 0       |
+|   icmp_ln34_44_fu_6048_p2            |     |        | icmp_ln34_44  | setne  | auto     | 0       |
+|   icmp_ln34_45_fu_6054_p2            |     |        | icmp_ln34_45  | seteq  | auto     | 0       |
+|   or_ln34_22_fu_6060_p2              |     |        | or_ln34_22    | or     | auto     | 0       |
+|   icmp_ln34_46_fu_6066_p2            |     |        | icmp_ln34_46  | setne  | auto     | 0       |
+|   icmp_ln34_47_fu_6072_p2            |     |        | icmp_ln34_47  | seteq  | auto     | 0       |
+|   or_ln34_23_fu_6078_p2              |     |        | or_ln34_23    | or     | auto     | 0       |
+|   and_ln34_22_fu_6084_p2             |     |        | and_ln34_22   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_106       | fcmp   | auto     | 1       |
+|   and_ln34_23_fu_6090_p2             |     |        | and_ln34_23   | and    | auto     | 0       |
+|   maxval_26_fu_6096_p3               |     |        | maxval_26     | select | auto_sel | 0       |
+|   icmp_ln34_48_fu_3060_p2            |     |        | icmp_ln34_48  | setne  | auto     | 0       |
+|   icmp_ln34_49_fu_3066_p2            |     |        | icmp_ln34_49  | seteq  | auto     | 0       |
+|   or_ln34_24_fu_3072_p2              |     |        | or_ln34_24    | or     | auto     | 0       |
+|   icmp_ln34_50_fu_3078_p2            |     |        | icmp_ln34_50  | setne  | auto     | 0       |
+|   icmp_ln34_51_fu_3084_p2            |     |        | icmp_ln34_51  | seteq  | auto     | 0       |
+|   or_ln34_25_fu_3090_p2              |     |        | or_ln34_25    | or     | auto     | 0       |
+|   and_ln34_24_fu_3096_p2             |     |        | and_ln34_24   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_109       | fcmp   | auto     | 1       |
+|   and_ln34_25_fu_3102_p2             |     |        | and_ln34_25   | and    | auto     | 0       |
+|   maxval_29_fu_3108_p3               |     |        | maxval_29     | select | auto_sel | 0       |
+|   icmp_ln34_52_fu_5332_p2            |     |        | icmp_ln34_52  | setne  | auto     | 0       |
+|   icmp_ln34_53_fu_5338_p2            |     |        | icmp_ln34_53  | seteq  | auto     | 0       |
+|   or_ln34_26_fu_5344_p2              |     |        | or_ln34_26    | or     | auto     | 0       |
+|   icmp_ln34_54_fu_5350_p2            |     |        | icmp_ln34_54  | setne  | auto     | 0       |
+|   icmp_ln34_55_fu_5356_p2            |     |        | icmp_ln34_55  | seteq  | auto     | 0       |
+|   or_ln34_27_fu_5362_p2              |     |        | or_ln34_27    | or     | auto     | 0       |
+|   and_ln34_26_fu_5368_p2             |     |        | and_ln34_26   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_112       | fcmp   | auto     | 1       |
+|   and_ln34_27_fu_5374_p2             |     |        | and_ln34_27   | and    | auto     | 0       |
+|   maxval_31_fu_5380_p3               |     |        | maxval_31     | select | auto_sel | 0       |
+|   icmp_ln34_56_fu_6136_p2            |     |        | icmp_ln34_56  | setne  | auto     | 0       |
+|   icmp_ln34_57_fu_6142_p2            |     |        | icmp_ln34_57  | seteq  | auto     | 0       |
+|   or_ln34_28_fu_6148_p2              |     |        | or_ln34_28    | or     | auto     | 0       |
+|   icmp_ln34_58_fu_6154_p2            |     |        | icmp_ln34_58  | setne  | auto     | 0       |
+|   icmp_ln34_59_fu_6160_p2            |     |        | icmp_ln34_59  | seteq  | auto     | 0       |
+|   or_ln34_29_fu_6166_p2              |     |        | or_ln34_29    | or     | auto     | 0       |
+|   and_ln34_28_fu_6172_p2             |     |        | and_ln34_28   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_115       | fcmp   | auto     | 1       |
+|   and_ln34_29_fu_6178_p2             |     |        | and_ln34_29   | and    | auto     | 0       |
+|   maxval_33_fu_6184_p3               |     |        | maxval_33     | select | auto_sel | 0       |
+|   icmp_ln34_60_fu_4178_p2            |     |        | icmp_ln34_60  | setne  | auto     | 0       |
+|   icmp_ln34_61_fu_4184_p2            |     |        | icmp_ln34_61  | seteq  | auto     | 0       |
+|   or_ln34_30_fu_4190_p2              |     |        | or_ln34_30    | or     | auto     | 0       |
+|   icmp_ln34_62_fu_4196_p2            |     |        | icmp_ln34_62  | setne  | auto     | 0       |
+|   icmp_ln34_63_fu_4202_p2            |     |        | icmp_ln34_63  | seteq  | auto     | 0       |
+|   or_ln34_31_fu_4208_p2              |     |        | or_ln34_31    | or     | auto     | 0       |
+|   and_ln34_30_fu_4214_p2             |     |        | and_ln34_30   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_118       | fcmp   | auto     | 1       |
+|   and_ln34_31_fu_4220_p2             |     |        | and_ln34_31   | and    | auto     | 0       |
+|   maxval_36_fu_4226_p3               |     |        | maxval_36     | select | auto_sel | 0       |
+|   icmp_ln34_64_fu_5420_p2            |     |        | icmp_ln34_64  | setne  | auto     | 0       |
+|   icmp_ln34_65_fu_5426_p2            |     |        | icmp_ln34_65  | seteq  | auto     | 0       |
+|   or_ln34_32_fu_5432_p2              |     |        | or_ln34_32    | or     | auto     | 0       |
+|   icmp_ln34_66_fu_5438_p2            |     |        | icmp_ln34_66  | setne  | auto     | 0       |
+|   icmp_ln34_67_fu_5444_p2            |     |        | icmp_ln34_67  | seteq  | auto     | 0       |
+|   or_ln34_33_fu_5450_p2              |     |        | or_ln34_33    | or     | auto     | 0       |
+|   and_ln34_32_fu_5456_p2             |     |        | and_ln34_32   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_121       | fcmp   | auto     | 1       |
+|   and_ln34_33_fu_5462_p2             |     |        | and_ln34_33   | and    | auto     | 0       |
+|   maxval_38_fu_5468_p3               |     |        | maxval_38     | select | auto_sel | 0       |
+|   icmp_ln34_68_fu_6232_p2            |     |        | icmp_ln34_68  | setne  | auto     | 0       |
+|   icmp_ln34_69_fu_6238_p2            |     |        | icmp_ln34_69  | seteq  | auto     | 0       |
+|   or_ln34_34_fu_6244_p2              |     |        | or_ln34_34    | or     | auto     | 0       |
+|   icmp_ln34_70_fu_6250_p2            |     |        | icmp_ln34_70  | setne  | auto     | 0       |
+|   icmp_ln34_71_fu_6256_p2            |     |        | icmp_ln34_71  | seteq  | auto     | 0       |
+|   or_ln34_35_fu_6262_p2              |     |        | or_ln34_35    | or     | auto     | 0       |
+|   and_ln34_34_fu_6268_p2             |     |        | and_ln34_34   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_124       | fcmp   | auto     | 1       |
+|   and_ln34_35_fu_6274_p2             |     |        | and_ln34_35   | and    | auto     | 0       |
+|   maxval_40_fu_6280_p3               |     |        | maxval_40     | select | auto_sel | 0       |
+|   icmp_ln34_72_fu_4266_p2            |     |        | icmp_ln34_72  | setne  | auto     | 0       |
+|   icmp_ln34_73_fu_4272_p2            |     |        | icmp_ln34_73  | seteq  | auto     | 0       |
+|   or_ln34_36_fu_4278_p2              |     |        | or_ln34_36    | or     | auto     | 0       |
+|   icmp_ln34_74_fu_4284_p2            |     |        | icmp_ln34_74  | setne  | auto     | 0       |
+|   icmp_ln34_75_fu_4290_p2            |     |        | icmp_ln34_75  | seteq  | auto     | 0       |
+|   or_ln34_37_fu_4296_p2              |     |        | or_ln34_37    | or     | auto     | 0       |
+|   and_ln34_36_fu_4302_p2             |     |        | and_ln34_36   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_127       | fcmp   | auto     | 1       |
+|   and_ln34_37_fu_4308_p2             |     |        | and_ln34_37   | and    | auto     | 0       |
+|   maxval_43_fu_4314_p3               |     |        | maxval_43     | select | auto_sel | 0       |
+|   icmp_ln34_76_fu_5508_p2            |     |        | icmp_ln34_76  | setne  | auto     | 0       |
+|   icmp_ln34_77_fu_5514_p2            |     |        | icmp_ln34_77  | seteq  | auto     | 0       |
+|   or_ln34_38_fu_5520_p2              |     |        | or_ln34_38    | or     | auto     | 0       |
+|   icmp_ln34_78_fu_5526_p2            |     |        | icmp_ln34_78  | setne  | auto     | 0       |
+|   icmp_ln34_79_fu_5532_p2            |     |        | icmp_ln34_79  | seteq  | auto     | 0       |
+|   or_ln34_39_fu_5538_p2              |     |        | or_ln34_39    | or     | auto     | 0       |
+|   and_ln34_38_fu_5544_p2             |     |        | and_ln34_38   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_130       | fcmp   | auto     | 1       |
+|   and_ln34_39_fu_5550_p2             |     |        | and_ln34_39   | and    | auto     | 0       |
+|   maxval_45_fu_5556_p3               |     |        | maxval_45     | select | auto_sel | 0       |
+|   icmp_ln34_80_fu_6320_p2            |     |        | icmp_ln34_80  | setne  | auto     | 0       |
+|   icmp_ln34_81_fu_6326_p2            |     |        | icmp_ln34_81  | seteq  | auto     | 0       |
+|   or_ln34_40_fu_6332_p2              |     |        | or_ln34_40    | or     | auto     | 0       |
+|   icmp_ln34_82_fu_6338_p2            |     |        | icmp_ln34_82  | setne  | auto     | 0       |
+|   icmp_ln34_83_fu_6344_p2            |     |        | icmp_ln34_83  | seteq  | auto     | 0       |
+|   or_ln34_41_fu_6350_p2              |     |        | or_ln34_41    | or     | auto     | 0       |
+|   and_ln34_40_fu_6356_p2             |     |        | and_ln34_40   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_133       | fcmp   | auto     | 1       |
+|   and_ln34_41_fu_6362_p2             |     |        | and_ln34_41   | and    | auto     | 0       |
+|   maxval_47_fu_6368_p3               |     |        | maxval_47     | select | auto_sel | 0       |
+|   icmp_ln34_84_fu_4354_p2            |     |        | icmp_ln34_84  | setne  | auto     | 0       |
+|   icmp_ln34_85_fu_4360_p2            |     |        | icmp_ln34_85  | seteq  | auto     | 0       |
+|   or_ln34_42_fu_4366_p2              |     |        | or_ln34_42    | or     | auto     | 0       |
+|   icmp_ln34_86_fu_4372_p2            |     |        | icmp_ln34_86  | setne  | auto     | 0       |
+|   icmp_ln34_87_fu_4378_p2            |     |        | icmp_ln34_87  | seteq  | auto     | 0       |
+|   or_ln34_43_fu_4384_p2              |     |        | or_ln34_43    | or     | auto     | 0       |
+|   and_ln34_42_fu_4390_p2             |     |        | and_ln34_42   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_136       | fcmp   | auto     | 1       |
+|   and_ln34_43_fu_4396_p2             |     |        | and_ln34_43   | and    | auto     | 0       |
+|   maxval_50_fu_4402_p3               |     |        | maxval_50     | select | auto_sel | 0       |
+|   icmp_ln34_88_fu_5596_p2            |     |        | icmp_ln34_88  | setne  | auto     | 0       |
+|   icmp_ln34_89_fu_5602_p2            |     |        | icmp_ln34_89  | seteq  | auto     | 0       |
+|   or_ln34_44_fu_5608_p2              |     |        | or_ln34_44    | or     | auto     | 0       |
+|   icmp_ln34_90_fu_5614_p2            |     |        | icmp_ln34_90  | setne  | auto     | 0       |
+|   icmp_ln34_91_fu_5620_p2            |     |        | icmp_ln34_91  | seteq  | auto     | 0       |
+|   or_ln34_45_fu_5626_p2              |     |        | or_ln34_45    | or     | auto     | 0       |
+|   and_ln34_44_fu_5632_p2             |     |        | and_ln34_44   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_139       | fcmp   | auto     | 1       |
+|   and_ln34_45_fu_5638_p2             |     |        | and_ln34_45   | and    | auto     | 0       |
+|   maxval_52_fu_5644_p3               |     |        | maxval_52     | select | auto_sel | 0       |
+|   icmp_ln34_92_fu_6416_p2            |     |        | icmp_ln34_92  | setne  | auto     | 0       |
+|   icmp_ln34_93_fu_6422_p2            |     |        | icmp_ln34_93  | seteq  | auto     | 0       |
+|   or_ln34_46_fu_6428_p2              |     |        | or_ln34_46    | or     | auto     | 0       |
+|   icmp_ln34_94_fu_6434_p2            |     |        | icmp_ln34_94  | setne  | auto     | 0       |
+|   icmp_ln34_95_fu_6440_p2            |     |        | icmp_ln34_95  | seteq  | auto     | 0       |
+|   or_ln34_47_fu_6446_p2              |     |        | or_ln34_47    | or     | auto     | 0       |
+|   and_ln34_46_fu_6452_p2             |     |        | and_ln34_46   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_142       | fcmp   | auto     | 1       |
+|   and_ln34_47_fu_6458_p2             |     |        | and_ln34_47   | and    | auto     | 0       |
+|   maxval_54_fu_6464_p3               |     |        | maxval_54     | select | auto_sel | 0       |
+|   icmp_ln34_96_fu_4442_p2            |     |        | icmp_ln34_96  | setne  | auto     | 0       |
+|   icmp_ln34_97_fu_4448_p2            |     |        | icmp_ln34_97  | seteq  | auto     | 0       |
+|   or_ln34_48_fu_4454_p2              |     |        | or_ln34_48    | or     | auto     | 0       |
+|   icmp_ln34_98_fu_4460_p2            |     |        | icmp_ln34_98  | setne  | auto     | 0       |
+|   icmp_ln34_99_fu_4466_p2            |     |        | icmp_ln34_99  | seteq  | auto     | 0       |
+|   or_ln34_49_fu_4472_p2              |     |        | or_ln34_49    | or     | auto     | 0       |
+|   and_ln34_48_fu_4478_p2             |     |        | and_ln34_48   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_145       | fcmp   | auto     | 1       |
+|   and_ln34_49_fu_4484_p2             |     |        | and_ln34_49   | and    | auto     | 0       |
+|   maxval_57_fu_4490_p3               |     |        | maxval_57     | select | auto_sel | 0       |
+|   icmp_ln34_100_fu_5684_p2           |     |        | icmp_ln34_100 | setne  | auto     | 0       |
+|   icmp_ln34_101_fu_5690_p2           |     |        | icmp_ln34_101 | seteq  | auto     | 0       |
+|   or_ln34_50_fu_5696_p2              |     |        | or_ln34_50    | or     | auto     | 0       |
+|   icmp_ln34_102_fu_5702_p2           |     |        | icmp_ln34_102 | setne  | auto     | 0       |
+|   icmp_ln34_103_fu_5708_p2           |     |        | icmp_ln34_103 | seteq  | auto     | 0       |
+|   or_ln34_51_fu_5714_p2              |     |        | or_ln34_51    | or     | auto     | 0       |
+|   and_ln34_50_fu_5720_p2             |     |        | and_ln34_50   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U24    |     |        | tmp_148       | fcmp   | auto     | 1       |
+|   and_ln34_51_fu_5726_p2             |     |        | and_ln34_51   | and    | auto     | 0       |
+|   maxval_59_fu_5732_p3               |     |        | maxval_59     | select | auto_sel | 0       |
+|   icmp_ln34_104_fu_6508_p2           |     |        | icmp_ln34_104 | setne  | auto     | 0       |
+|   icmp_ln34_105_fu_6514_p2           |     |        | icmp_ln34_105 | seteq  | auto     | 0       |
+|   or_ln34_52_fu_6520_p2              |     |        | or_ln34_52    | or     | auto     | 0       |
+|   icmp_ln34_106_fu_6526_p2           |     |        | icmp_ln34_106 | setne  | auto     | 0       |
+|   icmp_ln34_107_fu_6532_p2           |     |        | icmp_ln34_107 | seteq  | auto     | 0       |
+|   or_ln34_53_fu_6538_p2              |     |        | or_ln34_53    | or     | auto     | 0       |
+|   and_ln34_52_fu_6544_p2             |     |        | and_ln34_52   | and    | auto     | 0       |
+|   fcmp_32ns_32ns_1_2_no_dsp_1_U23    |     |        | tmp_151       | fcmp   | auto     | 1       |
+|   and_ln34_53_fu_6550_p2             |     |        | and_ln34_53   | and    | auto     | 0       |
+|   maxval_61_fu_6556_p3               |     |        | maxval_61     | select | auto_sel | 0       |
++--------------------------------------+-----+--------+---------------+--------+----------+---------+
+
+
+================================================================
+== Storage Report
+================================================================
+  No bind storage info in design
+
+================================================================
+== Pragma Report
+================================================================
+* Pragmas with Warnings
++-----------+-----------------------+-----------------------------------------+------------------------------------------------------------------------+
+| Type      | Options               | Location                                | Messages                                                               |
++-----------+-----------------------+-----------------------------------------+------------------------------------------------------------------------+
+| interface | ap_memory port=kernel | ../cnn_block.cpp:5 in cnn_block, kernel | Unsuported scalar variable on pragma 'ap_memory Interface', ignore it. |
++-----------+-----------------------+-----------------------------------------+------------------------------------------------------------------------+
+
+* Valid Pragma Syntax
++-----------------+----------------------------------+--------------------------------------------+
+| Type            | Options                          | Location                                   |
++-----------------+----------------------------------+--------------------------------------------+
+| interface       | ap_memory port=input             | ../cnn_block.cpp:4 in cnn_block, input     |
+| interface       | ap_memory port=output            | ../cnn_block.cpp:6 in cnn_block, output    |
+| array_partition | variable=kernel complete dim=0   | ../cnn_block.cpp:7 in cnn_block, kernel    |
+| pipeline        |                                  | ../cnn_block.cpp:8 in cnn_block            |
+| array_partition | variable=conv_out complete dim=0 | ../cnn_block.cpp:11 in cnn_block, conv_out |
+| unroll          | factor=2                         | ../cnn_block.cpp:16 in cnn_block           |
++-----------------+----------------------------------+--------------------------------------------+
+
+
